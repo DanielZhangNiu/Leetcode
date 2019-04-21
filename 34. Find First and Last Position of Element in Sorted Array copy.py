@@ -37,4 +37,4 @@ def binarySearchRight(A, x):
         mid = (left + right) // 2
         if x >= A[mid]: left = mid +1
         else: right = mid -1
-        return right
+    return right

@@ -18,7 +18,7 @@
     You must not use any built-in BigInteger library or convert the inputs to integer directly.
     
 """
-def multiply(self, num1, num2):
+def multiply(num1, num2):
     """
     :type num1: str
     :type num2: str
@@ -37,10 +37,11 @@ def multiply(self, num1, num2):
     for i, n1 in enumerate(num1[::-1]):
         for j, n2 in enumerate(num2[::-1]):
             res[i+j] += n1*n2
-        
+    # [18, 27, 28, 13, 4, 0]
     carry = 0
     for k in range(len(res)):
         res[k] += carry
         carry, res[k] = res[k] // 10, res[k] % 10
+    #[8,8,0,6,5,0]
         
     return "".join(map(str, res[::-1])).lstrip("0")
