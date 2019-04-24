@@ -9,7 +9,6 @@
 
     
     
-    
     as [1 [3[5 6] 2 4]]. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
     
     
@@ -31,9 +30,9 @@ class Codec:
     def serialize(self, root):
         """Encodes a tree to a single string.
             
-            :type root: Node
-            :rtype: str
-            """
+        :type root: Node
+        :rtype: st
+        """
         serial = []
         
         def preorder(node):
@@ -44,10 +43,10 @@ class Codec:
             for child in node.children:
                 preorder(child)
     
-                    serial.append("#")      # indicates no more children, continue serialization from parent
+            serial.append("#")      # indicates no more children, continue serialization from parent
                         
-                        preorder(root)
-                        return serial
+        preorder(root)
+        return serial
 
 
 def deserialize(self, data):
@@ -57,23 +56,23 @@ def deserialize(self, data):
         :rtype: Node
         """
             if not data:
-            return None
+                return None
                 
-                tokens = collections.deque(data)
-                root = Node(tokens.popleft(), [])
+            data = collections.deque(data)
+            root = Node(data.popleft(), [])
                 
-                def helper(node):
+            def helper(node):
                     
-                    if not tokens:
-                        return
+                if not data:
+                    return
                             
-                    while tokens[0] != "#": # add child nodes with subtrees
-                        value = tokens.popleft()
-                        child = Node(value, [])
-                        node.children.append(child)
-                        helper(child)
+                while tokens[0] != "#": # add child nodes with subtrees
+                    value = data.popleft()
+                    child = Node(value, [])
+                    node.children.append(child)
+                    helper(child)
                                     
-                    tokens.popleft()        # discard the "#"
+                data.popleft()        # discard the "#"
                                         
             helper(root)
             return root
