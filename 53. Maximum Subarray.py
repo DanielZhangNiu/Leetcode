@@ -21,13 +21,21 @@ def maxSubArray(nums):
     nums[i] += nums[i-1]
     return max(nums)
     """
-    if not nums: return 0
-    cur = res = nums[0]
-    for i in range(1,len(nums)):
-        cur = max(cur+nums[i], nums[i])
-        res = max(res,cur)
+    start=0
+    end=0
+    curr_max = prev_max= -float('inf')
+        
+    for i in range(0,len(nums)):
+        if curr_max < 0:
+                start = i+1
+        curr_max = max(curr_max + nums[i], nums[i])
+            
+        if curr_max > prev_max:
+            end = i
+            prev_max = curr_max
 
-    return res
+    print([start,end])
+    return prev_max
 
     
             

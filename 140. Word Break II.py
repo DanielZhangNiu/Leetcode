@@ -41,27 +41,29 @@ def wordBreak(s, dict):
     :type wordDict: List[str]
     :rtype: List[str]
     """
-        self.res = []
-        self.dfs(s, dict, '')
+        res = []
+        dfs(s, dict, '')
         return self.res
     
+#same as word break, us dp to measure whether the current s is valid or not
 def check(s, dict):
-    dp = [False for i in range(len(s)+1)]
-    dp[0] = True
-    for i in range(len(s)+1):
-        if not dp[i]:continue
-        for k in range(i, len(s)):
-            if s[i:k+1] in dict:
-                dp[k+1] = True
-    return dp[-1]
-    
-    
-def dfs(s, dict, stringlist):
-    if self.check(s, dict):
-        if len(s) == 0: self.res.append(stringlist[1:])
+        dp = [False for i in range(len(s)+1)]
+        dp[0] = True
+        for i in range(len(s)+1):
+            if dp[i] == False:
+                continue
+            for k in range(i, len(s)):
+                if s[i:k+1] in dict:
+                    dp[k+1] = True
+        return dp[-1]
+
+#use backtracing to compose the result
+def backtrace(s, dict, stringlist):
+    if check(s, dict):
+        if len(s) == 0:
+            self.res.append(stringlist[1:])
         for i in range(1, len(s)+1):
             if s[:i] in dict:
-                self.dfs(s[i:], dict, stringlist+' '+s[:i])
-
+                backtrace(s[i:], dict, stringlist+' '+s[:i])
 
 

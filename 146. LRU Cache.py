@@ -20,7 +20,6 @@
     cache.get(1);       // returns -1 (not found)
     cache.get(3);       // returns 3
     cache.get(4);       // returns 4
-    
 """
 class DNode:
     def __init__(self, key,val):
@@ -29,66 +28,76 @@ class DNode:
         self.prev = None
         self.next = None
 
-class LRUCache:
-    
-    def __init__(self, capacity):
-        """
-            :type capacity: int
-        """
-        # Cache starts empty and capacity is set by client
-        self.hashtable = collections.defaultdict()
-        self.size = capacity
+class DlinkedList:
+    def __init__(self):
         self.head = DNode(0,0)
         self.tail = DNode(0,0)
         self.head.next = self.tail
         self.tail.prev = self.head
     
-    def get(self, key):
-        """
-            :type key: int
-            :rtype: int
-        """
-        if key in self.hashtable:
-            n = self.hashtable.get(key)
-            self.removeNode(n)   # keep LRU feature, put recently visited element to the tail of list
-            self.addNode(n)
-            return n.val
-        else:
-            return -1
-
     def addNode(self, node):
-        pre = self.tail.prev
-        pre.next = node
-        node.prev = pre
-        node.next = self.tail
-        self.tail.prev = node
-
+        pos = self.head.next
+        pos.prev = node
+        node.next = pos
+        node.prev = self.head
+        self.head.next = node
+    
     def removeNode(self,node):
         pre = node.prev
         pos = node.next
         pre.next = pos
         pos.prev = pre
-    # Remove the given node from the doubly linked list
 
-    def put(self, key, value):
+class LRUCache:
+    
+    def __init__(self, capacity):
         """
-            :type key: int
-            :type value: int
-            :rtype: void
+        :type capacity: int
+        """
+        # Cache starts empty and capacity is set by client
+        self.hashtable = collections.defaultdict()
+        self.size = capacity
+        self.dlist = DlinkedList()
+    
+    def get(self, key):
+        """
+        :type key: int
+        :rtype: int
         """
         if key in self.hashtable:
             n = self.hashtable.get(key)
-            self.hashtable.pop(n.key)
-            self.removeNode(n)
-                
-        node = DNode(key,value)
-        self.addNode(node)
-        self.hashtable[key] = node
+            self.dlist.removeNode(n)   # keep LRU feature, put recently visited element to the head of list
+            self.dlist.addNode(n)
+            return n.val
+        else:
+            return -1
+    
+
+    def put(self, key, value):
+        """
+        :type key: int
+        :type value: int
+        :rtype: void
+        """
+        if key in self.hashtable:
+            n = self.hashtable.get(key)
+            self.dlist.removeNode(n)
+            self.dlist.addNode(n)
+            n.val = value
         
-        if self.size < len(self.hashtable):
-            tmp = self.head.next
-            self.removeNode(tmp)
-            self.hashtable.pop(tmp.key)
+        else:
+            if self.size == len(self.hashtable):
+                tmp = self.dlist.tail.prev
+                
+                self.dlist.removeNode(tmp)
+                self.hashtable.pop(tmp.key)
+            
+            node = DNode(key,value)
+            self.dlist.addNode(node)
+            self.hashtable[key] = node
+
+
+
 
 
 
