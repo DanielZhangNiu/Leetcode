@@ -19,39 +19,38 @@
 """
 
 
-# A normal list data structure, just add two element every time, the current val and minval
-# self.q.append((x, curMin))
+# Two stack, push at the same time, but minstack only push smallest value in.
 class MinStack:
     
     def __init__(self):
-        self.q = []
+        self.stack = []
+        self.minstack = []
     
     # @param x, an integer
     # @return an integer
     def push(self, x):
-        curMin = self.getMin()
-        if curMin == None or x < curMin:
-            curMin = x
-        self.q.append((x, curMin))
-    
+        self.stack.append(x)
+        if not self.minstack:
+            self.minstack.append(x)
+        else:
+            self.minstack.append(min(self.minstack[-1], x))
     # @return nothing
-    def pop(self):
-        self.q.pop()
-    
-    
+def pop(self):
+    self.stack.pop()
+    self.minstack.pop()
     # @return an integer
     def top(self):
-        if len(self.q) == 0:
-            return None
-        else:
-            return self.q[len(self.q) - 1][0]
-
-
+        return self.stack[-1]
+    
     # @return an integer
     def getMin(self):
-        if len(self.q) == 0:
-            return None
-        else:
-            return self.q[len(self.q) - 1][1]
+        return self.minstack[-1]
 
 
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(x)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
