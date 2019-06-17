@@ -28,29 +28,28 @@
 """
 import collections
 def dfs(root, target, curr, pre_dic):
-    if not root:
-        return 0
-        
-        curr += root.val
-        
+
         res = 0
         if curr - target in pre_dic:
             res += pre_dic[curr - target]
 
         pre_dic[curr] += 1
-        
-        res += self.dfs(root.left, target, curr, pre_dic)
-        res += self.dfs(root.right, target, curr, pre_dic)
-        
+
+        if root.left:
+            res += self.dfs(root.left, target, curr + root.left.val, pre_dic)
+        if root.right:
+            res += self.dfs(root.right, target, curr + root.right.val, pre_dic)
+
         pre_dic[curr] -= 1
         
         return res
 
 def pathSum(root: TreeNode, sum: int) -> int:
-    
+        if not root:
+            return 0
         dic = collections.defaultdict(int)
         dic[0] = 1
-        return self.dfs(root, sum, 0, dic)
+        return self.dfs(root, sum, root.val, dic)
 
 
 
