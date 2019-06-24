@@ -36,6 +36,7 @@ def findOrder(numCourses, prerequisites):
         if node v is being visited, then mark it as -1. If we find a vertex marked as -1 in DFS, then there is a cycle.
         if node v has been visited, then mark it as 1. If a vertex was marked as 1, then no cycle contains v or its successors.
         """
+        """
         graph = collections.defaultdict(list)
         visit = [0 for i in range(numCourses)]
         self.res = []
@@ -62,3 +63,23 @@ def findOrder(numCourses, prerequisites):
             if find_circle(i) == False:
                 return []
         return self.res
+
+    """
+        num_count = [0 for _ in range(numCourses)]
+        edgemap = collections.defaultdict(list)
+        for c, pre in prerequisites:
+            edgemap[pre].append(c)
+            num_count[c] += 1
+        
+        available = [i for i,v in enumerate(num_count) if v == 0]
+
+        res = []
+        where available:
+            cur = available.pop()
+            res.append(cur)
+            for neighbor in edgemap[cur]:
+                num_count[neighbor] -= 1
+                if num_count[neighbor] == 0:
+                    available.append(neighbor)
+        
+        return res if sum(num_count) == 0 else []

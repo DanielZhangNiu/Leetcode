@@ -48,7 +48,6 @@ class Solution:
         
         if not grid:
             return None
-        n = len(grid)
         return self.build(grid)
     
     def build(self,grid):
@@ -68,5 +67,4 @@ class Solution:
 
 def isLeaf(self, grid):
     s = set([grid[i][j] for i in range(len(grid[0])) for j in range(len(grid))])
-    
-        return len(s) == 1
+    return len(s) == 1
