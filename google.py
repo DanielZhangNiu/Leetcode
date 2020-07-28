@@ -1,6 +1,7 @@
 
 Q: Given a product name and an offer title, write a function that finds and returns an alias (a permutation of the consecutive product name tokens) from the offer title.
 
+
 Example 1)
 product name: lg g4 smartphone
 offer title: lg smartphone g4 64gb white
